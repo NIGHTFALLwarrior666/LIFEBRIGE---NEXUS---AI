@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LifeBridge AI — Societal-benefit emergency understanding and decision support powered by Gemini multimodal AI and deterministic validation.">
+  <title>LifeBridge AI — From Messy Human Input to Clear Next Actions</title>
+  
+  <!-- Modern Google Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- Accessible Skip Link for Keyboard Navigation -->
+  <a href="#main-content" class="skip-to-content">Skip to emergency input</a>
+
+  <!-- Top Navigation / Brand Header -->
+  <header class="top-nav" role="banner">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">LifeBridge AI</span>
+          <span class="brand-tag">EMERGENCY DECISION SUPPORT</span>
+        </div>
+      </div>
+
+      <div class="nav-status">
+        <div class="status-pill" id="system-status-indicator" role="status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span class="status-text" id="system-status-text">System Ready</span>
+        </div>
+        <div class="mode-badge gemini-badge" id="global-mode-badge" title="Active processing engine">
+          <span class="mode-icon">✦</span>
+          <span id="global-mode-label">Gemini 2.5 + Deterministic Rules</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main id="main-content" class="app-layout" role="main">
+    
+    <!-- Hero / Orientation Section -->
+    <section class="hero-section" aria-labelledby="hero-headline">
+      <div class="hero-badge">
+        <span class="sparkle">✦</span> AI Situational Intelligence + Deterministic Safety
+      </div>
+      <h1 id="hero-headline" class="hero-headline">
+        From messy human input<br>
+        <span class="gradient-text">to clear next actions.</span>
+      </h1>
+      <p class="hero-subheadline">
+        LifeBridge AI uses Gemini to interpret frantic text, disaster photos, and emergency audio, validates the result with strict safety rules, and turns chaotic uncertainty into prioritized next steps and crucial "DO NOT DO" negative constraints.
+      </p>
+
+      <!-- Problem-Solution Visual Pipeline -->
+      <div class="transformation-pipeline" aria-label="Incident Understanding Pipeline">
+        <div class="pipeline-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <strong>Messy Input</strong>
+            <span>Audio, photo, frantic text</span>
+          </div>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true">→</div>
+        <div class="pipeline-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <strong>Gemini Multimodal</strong>
+            <span>Extracts facts & hazards</span>
+          </div>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true">→</div>
+        <div class="pipeline-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <strong>Deterministic Safety</strong>
+            <span>Rules clamp & verify</span>
+          </div>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true">→</div>
+        <div class="pipeline-step highlight">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <strong>Clear Action Plan</strong>
+            <span>Priorities & DO NOT DOs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Input Command Bay -->
+    <section class="input-bay-card" aria-labelledby="input-heading">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2 id="input-heading" class="card-title">Situational Input Console</h2>
+          <p class="card-subtitle">Provide raw disaster context via text, disaster photos, or audio recordings.</p>
+        </div>
+
+        <!-- 1-Click Demo Scenarios -->
+        <div class="demo-scenarios-container" aria-label="Pre-loaded Emergency Scenarios">
+          <span class="demo-label">Instant Scenarios:</span>
+          <button type="button" class="demo-btn" id="demo-road-accident" data-scenario="road_accident" aria-label="Load Road Accident scenario">
+            <span class="demo-icon">🚗</span> Road Accident
+          </button>
+          <button type="button" class="demo-btn" id="demo-flood-rescue" data-scenario="flood_rescue" aria-label="Load Flood Rescue scenario">
+            <span class="demo-icon">🌊</span> Flood Rescue
+          </button>
+          <button type="button" class="demo-btn" id="demo-medical-note" data-scenario="medical_note" aria-label="Load Handwritten Medical Note scenario">
+            <span class="demo-icon">📋</span> Medical Note
+          </button>
+        </div>
+      </div>
+
+      <form id="emergency-form" class="emergency-form" novalidate>
+        <!-- Primary Text Input -->
+        <div class="form-group">
+          <label for="incident-text" class="input-label">
+            <span>Describe what happened or paste transcript</span>
+            <span class="char-count" id="char-counter" aria-live="polite">0 / 10,000</span>
+          </label>
+          <textarea
+            id="incident-text"
+            name="text"
+            class="incident-textarea"
+            rows="4"
+            placeholder="E.g. Highway collision at mile 42, sedan overturned in ditch with smoke coming from hood. Driver trapped inside, passenger screaming about neck pain. Liquid leaking on asphalt..."
+            maxlength="10000"
+            aria-describedby="text-help"
+          ></textarea>
+          <span id="text-help" class="visually-hidden">Enter all available emergency details, observations, caller statements, or injuries</span>
+        </div>
+
+        <!-- Multimodal Media Controls -->
+        <div class="media-controls-row">
+          <!-- File Drop & Selector -->
+          <div class="media-upload-bay">
+            <label for="incident-file" class="file-dropzone" id="file-dropzone" tabindex="0" role="button" aria-controls="incident-file">
+              <input type="file" id="incident-file" name="file" accept="image/jpeg,image/png,image/webp,audio/wav,audio/mpeg,audio/mp4,audio/ogg,audio/webm" class="visually-hidden">
+              <div class="dropzone-content">
+                <svg class="upload-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <div class="dropzone-text">
+                  <span class="primary-drop-text" id="file-label-text">Attach Incident Photo or Audio</span>
+                  <span class="secondary-drop-text">JPEG, PNG, WEBP, WAV, MP3, M4A up to 10MB</span>
+                </div>
+              </div>
+            </label>
+
+            <!-- File Attachment Badge & Preview -->
+            <div id="file-attachment-preview" class="file-attachment-preview hidden" aria-live="polite">
+              <div class="attachment-info">
+                <span class="attachment-icon" id="attachment-type-icon">📎</span>
+                <span class="attachment-filename" id="attachment-name">filename.jpg</span>
+                <span class="attachment-size" id="attachment-size">(0 KB)</span>
+              </div>
+              <button type="button" class="remove-attachment-btn" id="remove-attachment-btn" aria-label="Remove attached file">✕</button>
+            </div>
+          </div>
+
+          <!-- Quick Audio Recording Module -->
+          <div class="audio-record-bay">
+            <button type="button" class="mic-btn" id="mic-record-btn" aria-label="Record emergency voice note with microphone">
+              <svg class="mic-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+              <span id="mic-btn-label">Record Voice Note</span>
+            </button>
+            <div id="recording-live-indicator" class="recording-live-indicator hidden" role="status" aria-live="assertive">
+              <span class="pulsing-record-dot"></span>
+              <span id="recording-timer">00:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submission and Clear Actions -->
+        <div class="form-actions-bar">
+          <div class="left-actions">
+            <button type="button" class="secondary-btn" id="clear-input-btn" aria-label="Clear all inputs">
+              Reset Console
+            </button>
+          </div>
+          <div class="right-actions">
+            <button type="submit" class="primary-btn" id="analyze-btn">
+              <span class="btn-spinner hidden" id="analyze-spinner" aria-hidden="true"></span>
+              <span class="btn-text" id="analyze-btn-text">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                Analyze Situation
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Live Processing Pipeline State (Shown during analysis) -->
+    <div id="processing-pipeline-status" class="processing-card hidden" role="status" aria-live="polite">
+      <div class="processing-header">
+        <div class="processing-spinner" aria-hidden="true"></div>
+        <div class="processing-text-block">
+          <h3 class="processing-title" id="processing-step-title">Processing Multimodal Emergency Signals...</h3>
+          <p class="processing-subtitle" id="processing-step-subtitle">Routing to Gemini multimodal reasoning model</p>
+        </div>
+      </div>
+      <div class="pipeline-progress-bar">
+        <div class="progress-fill" id="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Error Alert Banner -->
+    <div id="error-alert" class="alert-banner alert-error hidden" role="alert" aria-live="assertive">
+      <div class="alert-icon" aria-hidden="true">⚠️</div>
+      <div class="alert-content">
+        <strong id="error-title">Processing Error</strong>
+        <p id="error-message">Unable to parse incident details. Please try again or select a demo scenario.</p>
+      </div>
+      <button type="button" class="alert-close-btn" id="error-close-btn" aria-label="Dismiss alert">✕</button>
+    </div>
+
+    <!-- Results Experience: Decision Support Dashboard -->
+    <section id="results-dashboard" class="results-dashboard hidden" aria-labelledby="dashboard-heading">
+      
+      <!-- Top Intelligence Bar -->
+      <div class="intel-header-bar">
+        <div class="intel-primary-meta">
+          <div class="incident-badge-row">
+            <span class="meta-label">CLASSIFIED INCIDENT</span>
+            <span class="engine-badge" id="result-engine-badge">✦ Gemini AI Verified</span>
+          </div>
+          <h2 id="dashboard-heading" class="incident-title-text">Multi-Vehicle Highway Collision</h2>
+          <div class="timestamp-row">
+            <span class="timestamp-label">Processed at:</span>
+            <time id="result-timestamp" class="timestamp-val">2026-09-11 12:00:00 UTC</time>
+          </div>
+        </div>
+
+        <div class="intel-pills-cluster">
+          <!-- Severity Indicator -->
+          <div class="metric-card severity-card" id="severity-metric-box">
+            <span class="metric-eyebrow">SEVERITY LEVEL</span>
+            <div class="metric-val-group">
+              <span class="severity-indicator-dot" id="severity-dot"></span>
+              <span class="metric-val" id="result-severity-val">CRITICAL</span>
+            </div>
+          </div>
+
+          <!-- Escalation Protocol Indicator -->
+          <div class="metric-card escalation-card" id="escalation-metric-box">
+            <span class="metric-eyebrow">ESCALATION PROTOCOL</span>
+            <div class="metric-val-group">
+              <span class="escalation-icon" id="escalation-icon">🚨</span>
+              <span class="metric-val" id="result-escalation-val">EMERGENCY SERVICES</span>
+            </div>
+          </div>
+
+          <!-- Confidence Clamped Score -->
+          <div class="metric-card confidence-card">
+            <span class="metric-eyebrow">AI CONFIDENCE</span>
+            <div class="metric-val-group">
+              <span class="metric-val" id="result-confidence-val">88%</span>
+              <span class="metric-subval" id="result-confidence-status">(Verified)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Toolbar -->
+      <div class="dashboard-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-hint">Generated decision-support intelligence for field responders & dispatchers</span>
+        </div>
+        <div class="toolbar-right">
+          <button type="button" class="toolbar-btn" id="copy-summary-btn" aria-label="Copy executive briefing to clipboard">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="copy-btn-label">Copy Briefing</span>
+          </button>
+          <button type="button" class="toolbar-btn" id="new-analysis-btn" aria-label="Start fresh analysis">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>New Analysis</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Results Grid -->
+      <div class="results-grid">
+        
+        <!-- Card 1: What We Understand (Situational Summary & Evidence) -->
+        <article class="dashboard-card card-full-width" aria-labelledby="card-summary-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble blue-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+            </div>
+            <h3 id="card-summary-heading" class="card-heading">1. Situational Understanding</h3>
+          </div>
+          <div class="card-content">
+            <p class="summary-body-text" id="result-summary-text">
+              Situational synthesis loading...
+            </p>
+            <div class="evidence-block">
+              <h4 class="evidence-title">Observed Evidence & Sources:</h4>
+              <ul class="evidence-list" id="result-evidence-list">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Immediate Prioritized Actions -->
+        <article class="dashboard-card" aria-labelledby="card-actions-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble emerald-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4"/>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+            </div>
+            <h3 id="card-actions-heading" class="card-heading">2. Immediate Action Plan</h3>
+          </div>
+          <div class="card-content">
+            <ol class="action-list" id="result-actions-list">
+              <!-- Dynamically populated -->
+            </ol>
+          </div>
+        </article>
+
+        <!-- Card 3: DO NOT DO (Critical Negative Constraints) -->
+        <article class="dashboard-card card-warning-border" aria-labelledby="card-dnd-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble crimson-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+            </div>
+            <h3 id="card-dnd-heading" class="card-heading crimson-text">3. Crucial DO NOT DO Constraints</h3>
+          </div>
+          <div class="card-content">
+            <div class="dnd-banner">
+              <strong class="dnd-banner-title">Negative Safety Precautions to Prevent Injury or Fatality:</strong>
+            </div>
+            <ul class="dnd-list" id="result-dnd-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </article>
+
+        <!-- Card 4: Detected Hazards Radar -->
+        <article class="dashboard-card" aria-labelledby="card-hazards-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble amber-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <h3 id="card-hazards-heading" class="card-heading">4. Detected Hazards</h3>
+          </div>
+          <div class="card-content">
+            <div class="hazards-chips" id="result-hazards-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5: Missing Information & Gaps -->
+        <article class="dashboard-card" aria-labelledby="card-missing-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble purple-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <h3 id="card-missing-heading" class="card-heading">5. Critical Information Gaps</h3>
+          </div>
+          <div class="card-content">
+            <p class="section-instruction">Questions dispatchers / responders should immediately verify:</p>
+            <ul class="gap-list" id="result-missing-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </article>
+
+        <!-- Card 6: Uncertainties & Assumptions -->
+        <article class="dashboard-card" aria-labelledby="card-uncertainties-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble slate-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <h3 id="card-uncertainties-heading" class="card-heading">6. Preserved Uncertainties</h3>
+          </div>
+          <div class="card-content">
+            <p class="section-instruction">Unverified claims in the raw input not treated as facts:</p>
+            <ul class="uncertainty-list" id="result-uncertainties-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </article>
+
+        <!-- Card 7: Deterministic Validation Audit Log -->
+        <article class="dashboard-card card-full-width" aria-labelledby="card-validation-heading">
+          <div class="card-top">
+            <div class="card-icon-bubble teal-bubble" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3 id="card-validation-heading" class="card-heading">Deterministic Rule Engine Audit</h3>
+          </div>
+          <div class="card-content">
+            <div id="validation-records-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Legal & Medical Decision Support Disclaimer -->
+      <footer class="decision-support-disclaimer" role="contentinfo">
+        <div class="disclaimer-icon" aria-hidden="true">⚖️</div>
+        <p class="disclaimer-text" id="result-disclaimer-text">
+          DECISION SUPPORT ONLY: LifeBridge AI provides structured situational interpretation and deterministic validation. It does not provide certified medical diagnoses, guaranteed safety, or automatic emergency dispatch. In immediate danger, contact local emergency services directly.
+        </p>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <strong>LifeBridge AI</strong> — High-Stakes Societal Benefit AI Hackathon Entry
+      </div>
+      <div class="footer-right">
+        <span>Powered by Google Gemini Multimodal + Python FastAPI + Cloud Run</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
