@@ -311,19 +311,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const stageStep1 = document.getElementById('stage-step-1');
+  const stageStep2 = document.getElementById('stage-step-2');
+  const stageStep3 = document.getElementById('stage-step-3');
+
+  function updateStageSteps(stage) {
+    if (!stageStep1 || !stageStep2 || !stageStep3) return;
+    stageStep1.className = 'stage-step' + (stage === 1 ? ' active' : stage > 1 ? ' completed' : '');
+    stageStep2.className = 'stage-step' + (stage === 2 ? ' active' : stage > 2 ? ' completed' : '');
+    stageStep3.className = 'stage-step' + (stage === 3 ? ' active' : stage > 3 ? ' completed' : '');
+  }
+
   function simulatePipelineProgress() {
-    progressBarFill.style.width = '15%';
+    updateStageSteps(1);
+    progressBarFill.style.width = '18%';
     processingStepTitle.textContent = 'Ingesting Multimodal Incident Data...';
     processingStepSubtitle.textContent = 'Validating input parameters and MIME allowlists';
 
     setTimeout(() => {
-      progressBarFill.style.width = '45%';
+      updateStageSteps(2);
+      progressBarFill.style.width = '55%';
       processingStepTitle.textContent = 'Gemini Multimodal Understanding...';
       processingStepSubtitle.textContent = 'Extracting factual incident context and hazards';
     }, 400);
 
     setTimeout(() => {
-      progressBarFill.style.width = '75%';
+      updateStageSteps(3);
+      progressBarFill.style.width = '85%';
       processingStepTitle.textContent = 'Deterministic Safety Rules & Clamping...';
       processingStepSubtitle.textContent = 'Enforcing critical escalation and negative constraints';
     }, 800);
@@ -340,11 +354,19 @@ document.addEventListener('DOMContentLoaded', () => {
       analyzeSpinner.classList.add('hidden');
       analyzeBtnText.classList.remove('hidden');
       processingCard.classList.add('hidden');
+      updateStageSteps(1);
     }
   }
 
   // 8. Results Rendering Engine
   function renderResults(data) {
+    // Re-trigger card entrance animations for dynamic impact
+    document.querySelectorAll('.results-grid > .dashboard-card').forEach(card => {
+      card.style.animation = 'none';
+      void card.offsetHeight;
+      card.style.animation = '';
+    });
+
     // 1. Engine / Mode Badge
     const engineBadge = document.getElementById('result-engine-badge');
     if (data.mode === 'gemini') {

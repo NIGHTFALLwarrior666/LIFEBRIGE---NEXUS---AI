@@ -14,6 +14,14 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <!-- Ambient Animated Background Glow Orbs -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow-orb glow-cyan"></div>
+    <div class="ambient-glow-orb glow-purple"></div>
+    <div class="ambient-glow-orb glow-rose"></div>
+    <div class="ambient-cyber-grid"></div>
+  </div>
+
   <!-- Accessible Skip Link for Keyboard Navigation -->
   <a href="#main-content" class="skip-to-content">Skip to emergency input</a>
 
@@ -108,14 +116,37 @@
         <!-- 1-Click Demo Scenarios -->
         <div class="demo-scenarios-container" aria-label="Pre-loaded Emergency Scenarios">
           <span class="demo-label">Instant Scenarios:</span>
-          <button type="button" class="demo-btn" id="demo-road-accident" data-scenario="road_accident" aria-label="Load Road Accident scenario">
-            <span class="demo-icon">🚗</span> Road Accident
+          <button type="button" class="demo-btn demo-btn-road" id="demo-road-accident" data-scenario="road_accident" aria-label="Load Road Accident scenario">
+            <span class="demo-icon-badge road-badge" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/>
+                <circle cx="7" cy="17" r="2"/>
+                <path d="M9 17h6"/>
+                <circle cx="17" cy="17" r="2"/>
+              </svg>
+            </span>
+            <span class="demo-btn-text">Road Accident</span>
           </button>
-          <button type="button" class="demo-btn" id="demo-flood-rescue" data-scenario="flood_rescue" aria-label="Load Flood Rescue scenario">
-            <span class="demo-icon">🌊</span> Flood Rescue
+          <button type="button" class="demo-btn demo-btn-flood" id="demo-flood-rescue" data-scenario="flood_rescue" aria-label="Load Flood Rescue scenario">
+            <span class="demo-icon-badge flood-badge" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+                <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+                <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+              </svg>
+            </span>
+            <span class="demo-btn-text">Flood Rescue</span>
           </button>
-          <button type="button" class="demo-btn" id="demo-medical-note" data-scenario="medical_note" aria-label="Load Handwritten Medical Note scenario">
-            <span class="demo-icon">📋</span> Medical Note
+          <button type="button" class="demo-btn demo-btn-medical" id="demo-medical-note" data-scenario="medical_note" aria-label="Load Handwritten Medical Note scenario">
+            <span class="demo-icon-badge medical-badge" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                <path d="M9 14h6"/>
+                <path d="M12 11v6"/>
+              </svg>
+            </span>
+            <span class="demo-btn-text">Medical Note</span>
           </button>
         </div>
       </div>
@@ -212,15 +243,35 @@
 
     <!-- Live Processing Pipeline State (Shown during analysis) -->
     <div id="processing-pipeline-status" class="processing-card hidden" role="status" aria-live="polite">
+      <div class="processing-glow-overlay" aria-hidden="true"></div>
       <div class="processing-header">
-        <div class="processing-spinner" aria-hidden="true"></div>
+        <div class="processing-radar-container" aria-hidden="true">
+          <div class="radar-orbital radar-orbital-outer"></div>
+          <div class="radar-orbital radar-orbital-mid"></div>
+          <div class="radar-core"></div>
+        </div>
         <div class="processing-text-block">
+          <div class="processing-eyebrow">
+            <span class="live-indicator-dot"></span> REAL-TIME REASONING PIPELINE
+          </div>
           <h3 class="processing-title" id="processing-step-title">Processing Multimodal Emergency Signals...</h3>
           <p class="processing-subtitle" id="processing-step-subtitle">Routing to Gemini multimodal reasoning model</p>
         </div>
       </div>
       <div class="pipeline-progress-bar">
         <div class="progress-fill" id="progress-bar-fill"></div>
+        <div class="progress-shimmer" aria-hidden="true"></div>
+      </div>
+      <div class="pipeline-stages-tracker" aria-hidden="true">
+        <span class="stage-step active" id="stage-step-1">
+          <span class="step-dot"></span> 01 Ingest & Validate
+        </span>
+        <span class="stage-step" id="stage-step-2">
+          <span class="step-dot"></span> 02 Gemini Multimodal
+        </span>
+        <span class="stage-step" id="stage-step-3">
+          <span class="step-dot"></span> 03 Safety Clamping
+        </span>
       </div>
     </div>
 
