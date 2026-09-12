@@ -482,3 +482,75 @@ def test_vercel_entrypoint_module():
     assert v_res.status_code == 200
     assert "Nexus AI" in v_res.text
 
+
+# ==============================================================================
+# 6. Vercel __path Rewrite Parameter & Public Assets Tests
+# ==============================================================================
+
+def test_vercel_path_param_root_rewrite():
+    """Verify that Vercel rewrite parameter ?__path= resolves to root landing page."""
+    res = client.get("/api/index.py?__path=")
+    assert res.status_code == 200
+    assert "text/html" in res.headers["content-type"]
+    assert "Nexus AI" in res.text
+
+
+def test_vercel_path_param_styles_rewrite():
+    """Verify that Vercel rewrite parameter ?__path=styles.css resolves to CSS with 200."""
+    res = client.get("/api/index.py?__path=styles.css")
+    assert res.status_code == 200
+    assert "text/css" in res.headers["content-type"]
+    assert len(res.content) > 1000
+
+
+def test_vercel_path_param_js_rewrite():
+    """Verify that Vercel rewrite parameter ?__path=app.js resolves to JS with 200."""
+    res = client.get("/api/index.py?__path=app.js")
+    assert res.status_code == 200
+    assert "javascript" in res.headers["content-type"]
+    assert len(res.content) > 1000
+
+
+def test_vercel_path_param_nexus_assets_rewrite():
+    """Verify that Vercel rewrite parameter ?__path=nexus/styles.css and ?__path=nexus/app.js resolve."""
+    css_res = client.get("/api/index.py?__path=nexus/styles.css")
+    assert css_res.status_code == 200
+    assert "text/css" in css_res.headers["content-type"]
+
+    js_res = client.get("/api/index.py?__path=nexus/app.js")
+    assert js_res.status_code == 200
+    assert "javascript" in js_res.headers["content-type"]
+
+
+def test_vercel_path_param_api_rewrite():
+    """Verify that Vercel rewrite parameter ?__path=api/nexus/roi-estimate routes to the API."""
+    calc_payload = {
+        "specialists": 4,
+        "hours_per_week": 15,
+        "hourly_rate": 32.0,
+        "monthly_claims": 2500,
+        "denial_rate_pct": 10.0,
+    }
+    res = client.post("/api/index.py?__path=api/nexus/roi-estimate", json=calc_payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "success"
+    assert data["net_annual_savings"] > 0
+
+
+def test_public_static_assets_exist():
+    """Verify that all required static assets exist in public/ for direct Vercel CDN delivery."""
+    from pathlib import Path
+    base = Path(__file__).resolve().parent.parent
+    public_dir = base / "public"
+    assert public_dir.exists()
+    assert (public_dir / "styles.css").exists()
+    assert (public_dir / "styles.css").stat().st_size > 10000
+    assert (public_dir / "app.js").exists()
+    assert (public_dir / "app.js").stat().st_size > 10000
+    assert (public_dir / "index.html").exists()
+    assert (public_dir / "nexus" / "styles.css").exists()
+    assert (public_dir / "nexus" / "app.js").exists()
+    assert (public_dir / "nexus" / "index.html").exists()
+
+

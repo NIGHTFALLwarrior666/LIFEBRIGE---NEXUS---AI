@@ -35,11 +35,10 @@ class VercelPathRewriteMiddleware:
     """ASGI Middleware to restore the original client request path when running
     behind Vercel Serverless Function rewrites.
     
-    When vercel.json rewrites /(.*) to /api/index.py, Vercel sets the ASGI scope['path']
-    to '/api/index.py' while forwarding the actual client URI in the 'x-matched-path' header.
-    This middleware extracts that header and restores the original path and raw_path in scope,
-    allowing FastAPI's router to match the correct routes (/, /nexus/, /styles.css, etc.).
-    If no matched-path header exists but path is /api/index.py or /api, it safely falls back to '/'.
+    Extracts path from:
+    1. Query parameter '__path' passed by vercel.json rewrite rules (most deterministic)
+    2. Headers: 'x-matched-path', 'x-vercel-matched-path', 'x-forwarded-uri', 'x-original-url'
+    3. Direct entrypoint fallback if invoked via /api/index.py or /api
     """
 
     def __init__(self, app):
@@ -47,38 +46,58 @@ class VercelPathRewriteMiddleware:
 
     async def __call__(self, scope, receive, send):
         if scope["type"] in ("http", "websocket"):
-            headers = dict(scope.get("headers", []))
-            matched_header = (
-                headers.get(b"x-matched-path")
-                or headers.get(b"x-vercel-matched-path")
-                or headers.get(b"x-forwarded-uri")
-                or headers.get(b"x-original-url")
-            )
+            path_override = None
 
-            if matched_header:
-                try:
-                    decoded = matched_header.decode("utf-8")
-                except UnicodeDecodeError:
-                    decoded = matched_header.decode("latin1", errors="replace")
+            # 1. Check for query parameter __path passed by vercel.json rewrite rule
+            raw_qs = scope.get("query_string", b"")
+            if raw_qs and b"__path=" in raw_qs:
+                import urllib.parse
+                qs = urllib.parse.parse_qs(raw_qs.decode("utf-8", errors="replace"), keep_blank_values=True)
+                if "__path" in qs:
+                    val = qs.pop("__path")[0]
+                    if not val.startswith("/"):
+                        val = "/" + val
+                    path_override = val
+                    clean_qs = urllib.parse.urlencode(qs, doseq=True)
+                    scope["query_string"] = clean_qs.encode("utf-8")
 
-                if "?" in decoded:
-                    path_part, query_part = decoded.split("?", 1)
-                else:
-                    path_part = decoded
-                    query_part = None
+            if path_override:
+                scope["path"] = path_override
+                scope["raw_path"] = path_override.encode("utf-8")
+            else:
+                # 2. Check headers
+                headers = dict(scope.get("headers", []))
+                matched_header = (
+                    headers.get(b"x-matched-path")
+                    or headers.get(b"x-vercel-matched-path")
+                    or headers.get(b"x-forwarded-uri")
+                    or headers.get(b"x-original-url")
+                )
 
-                if not path_part.startswith("/"):
-                    path_part = "/" + path_part
+                if matched_header:
+                    try:
+                        decoded = matched_header.decode("utf-8")
+                    except UnicodeDecodeError:
+                        decoded = matched_header.decode("latin1", errors="replace")
 
-                scope["path"] = path_part
-                scope["raw_path"] = path_part.encode("utf-8")
+                    if "?" in decoded:
+                        path_part, query_part = decoded.split("?", 1)
+                    else:
+                        path_part = decoded
+                        query_part = None
 
-                if query_part and not scope.get("query_string"):
-                    scope["query_string"] = query_part.encode("utf-8")
+                    if not path_part.startswith("/"):
+                        path_part = "/" + path_part
 
-            elif scope.get("path") in ("/api/index.py", "/api/index", "/api", "/api/"):
-                scope["path"] = "/"
-                scope["raw_path"] = b"/"
+                    scope["path"] = path_part
+                    scope["raw_path"] = path_part.encode("utf-8")
+
+                    if query_part and not scope.get("query_string"):
+                        scope["query_string"] = query_part.encode("utf-8")
+
+                elif scope.get("path") in ("/api/index.py", "/api/index", "/api", "/api/"):
+                    scope["path"] = "/"
+                    scope["raw_path"] = b"/"
 
         await self.app(scope, receive, send)
 
@@ -133,6 +152,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "static"
 NEXUS_DIR = BASE_DIR / "nexus_ai"
+PUBLIC_DIR = BASE_DIR / "public"
 
 # Serverless environment directory fallback (Vercel / Cloud Run)
 if not NEXUS_DIR.exists():
@@ -153,6 +173,10 @@ if not STATIC_DIR.exists():
 # Mount static directory for CSS, JS, and UI assets (LifeBridge AI)
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+# Mount public directory for Vercel CDN static assets
+if PUBLIC_DIR.exists():
+    app.mount("/public", StaticFiles(directory=str(PUBLIC_DIR)), name="public")
 
 # Mount Nexus AI B2B SaaS MVP Landing Page
 if NEXUS_DIR.exists():
@@ -271,12 +295,17 @@ async def favicon():
 # Nexus AI B2B SaaS Landing Page Routes (Production Root, Aliases & /nexus/)
 # --------------------------------------------------------------------------
 def _resolve_nexus_file(filename: str) -> Optional[Path]:
-    """Helper to locate a file in nexus_ai directory across serverless runtimes."""
+    """Helper to locate a file in public or nexus_ai directory across serverless runtimes."""
     candidates = [
+        PUBLIC_DIR / filename,
+        PUBLIC_DIR / "nexus" / filename,
         NEXUS_DIR / filename,
+        BASE_DIR / "public" / filename,
         BASE_DIR / "nexus_ai" / filename,
+        Path.cwd() / "public" / filename,
         Path.cwd() / "nexus_ai" / filename,
         Path.cwd() / filename,
+        Path(__file__).resolve().parent.parent / "public" / filename,
         Path(__file__).resolve().parent.parent / "nexus_ai" / filename,
         Path(__file__).resolve().parent / "nexus_ai" / filename,
     ]
@@ -311,8 +340,10 @@ async def serve_nexus_page():
 
 @app.get("/styles.css", include_in_schema=False)
 @app.get("/nexus/styles.css", include_in_schema=False)
+@app.get("/nexus_ai/styles.css", include_in_schema=False)
+@app.get("/public/styles.css", include_in_schema=False)
 async def serve_root_styles():
-    """Serve styles.css when index.html is loaded from root or /nexus/ path."""
+    """Serve styles.css when index.html is loaded from root, /nexus/, or /public/ path."""
     resolved = _resolve_nexus_file("styles.css")
     if resolved:
         return FileResponse(str(resolved), media_type="text/css")
@@ -321,8 +352,10 @@ async def serve_root_styles():
 
 @app.get("/app.js", include_in_schema=False)
 @app.get("/nexus/app.js", include_in_schema=False)
+@app.get("/nexus_ai/app.js", include_in_schema=False)
+@app.get("/public/app.js", include_in_schema=False)
 async def serve_root_js():
-    """Serve app.js when index.html is loaded from root or /nexus/ path."""
+    """Serve app.js when index.html is loaded from root, /nexus/, or /public/ path."""
     resolved = _resolve_nexus_file("app.js")
     if resolved:
         return FileResponse(str(resolved), media_type="application/javascript")
