@@ -31,6 +31,61 @@ app = FastAPI(
     version="1.0.0",
 )
 
+class VercelPathRewriteMiddleware:
+    """ASGI Middleware to restore the original client request path when running
+    behind Vercel Serverless Function rewrites.
+    
+    When vercel.json rewrites /(.*) to /api/index.py, Vercel sets the ASGI scope['path']
+    to '/api/index.py' while forwarding the actual client URI in the 'x-matched-path' header.
+    This middleware extracts that header and restores the original path and raw_path in scope,
+    allowing FastAPI's router to match the correct routes (/, /nexus/, /styles.css, etc.).
+    If no matched-path header exists but path is /api/index.py or /api, it safely falls back to '/'.
+    """
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] in ("http", "websocket"):
+            headers = dict(scope.get("headers", []))
+            matched_header = (
+                headers.get(b"x-matched-path")
+                or headers.get(b"x-vercel-matched-path")
+                or headers.get(b"x-forwarded-uri")
+                or headers.get(b"x-original-url")
+            )
+
+            if matched_header:
+                try:
+                    decoded = matched_header.decode("utf-8")
+                except UnicodeDecodeError:
+                    decoded = matched_header.decode("latin1", errors="replace")
+
+                if "?" in decoded:
+                    path_part, query_part = decoded.split("?", 1)
+                else:
+                    path_part = decoded
+                    query_part = None
+
+                if not path_part.startswith("/"):
+                    path_part = "/" + path_part
+
+                scope["path"] = path_part
+                scope["raw_path"] = path_part.encode("utf-8")
+
+                if query_part and not scope.get("query_string"):
+                    scope["query_string"] = query_part.encode("utf-8")
+
+            elif scope.get("path") in ("/api/index.py", "/api/index", "/api", "/api/"):
+                scope["path"] = "/"
+                scope["raw_path"] = b"/"
+
+        await self.app(scope, receive, send)
+
+
+# Vercel Path Rewrite Middleware (outermost handler)
+app.add_middleware(VercelPathRewriteMiddleware)
+
 # CORS Middleware
 app.add_middleware(
     CORSMiddleware,
@@ -213,48 +268,64 @@ async def favicon():
 
 
 # --------------------------------------------------------------------------
-# Nexus AI B2B SaaS Landing Page Routes (Production Root & /nexus/)
+# Nexus AI B2B SaaS Landing Page Routes (Production Root, Aliases & /nexus/)
 # --------------------------------------------------------------------------
+def _resolve_nexus_file(filename: str) -> Optional[Path]:
+    """Helper to locate a file in nexus_ai directory across serverless runtimes."""
+    candidates = [
+        NEXUS_DIR / filename,
+        BASE_DIR / "nexus_ai" / filename,
+        Path.cwd() / "nexus_ai" / filename,
+        Path.cwd() / filename,
+        Path(__file__).resolve().parent.parent / "nexus_ai" / filename,
+        Path(__file__).resolve().parent / "nexus_ai" / filename,
+    ]
+    for c in candidates:
+        if c.exists() and c.is_file():
+            return c.resolve()
+    return None
+
+
 @app.get("/", response_class=FileResponse, tags=["Nexus AI"])
+@app.get("/api/index.py", response_class=FileResponse, tags=["Nexus AI"], include_in_schema=False)
+@app.get("/api/index", response_class=FileResponse, tags=["Nexus AI"], include_in_schema=False)
+@app.get("/api", response_class=FileResponse, tags=["Nexus AI"], include_in_schema=False)
+@app.get("/api/", response_class=FileResponse, tags=["Nexus AI"], include_in_schema=False)
 async def serve_nexus_root():
-    """Serve the Nexus AI B2B SaaS MVP landing page at production root URL '/'."""
-    index_path = NEXUS_DIR / "index.html"
-    if not index_path.exists():
+    """Serve the complete Nexus AI B2B SaaS MVP landing page directly at production root."""
+    resolved = _resolve_nexus_file("index.html")
+    if not resolved:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Nexus AI landing page index.html not found.",
         )
-    return FileResponse(str(index_path))
+    return FileResponse(str(resolved), media_type="text/html")
 
 
 @app.get("/nexus", response_class=FileResponse, tags=["Nexus AI"])
 @app.get("/nexus/", response_class=FileResponse, tags=["Nexus AI"])
 async def serve_nexus_page():
     """Serve the Nexus AI B2B SaaS MVP landing page at '/nexus/'."""
-    index_path = NEXUS_DIR / "index.html"
-    if not index_path.exists():
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Nexus AI landing page index.html not found.",
-        )
-    return FileResponse(str(index_path))
+    return await serve_nexus_root()
 
 
 @app.get("/styles.css", include_in_schema=False)
+@app.get("/nexus/styles.css", include_in_schema=False)
 async def serve_root_styles():
-    """Serve styles.css when index.html is loaded from the root path."""
-    css_path = NEXUS_DIR / "styles.css"
-    if css_path.exists():
-        return FileResponse(str(css_path), media_type="text/css")
+    """Serve styles.css when index.html is loaded from root or /nexus/ path."""
+    resolved = _resolve_nexus_file("styles.css")
+    if resolved:
+        return FileResponse(str(resolved), media_type="text/css")
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="styles.css not found")
 
 
 @app.get("/app.js", include_in_schema=False)
+@app.get("/nexus/app.js", include_in_schema=False)
 async def serve_root_js():
-    """Serve app.js when index.html is loaded from the root path."""
-    js_path = NEXUS_DIR / "app.js"
-    if js_path.exists():
-        return FileResponse(str(js_path), media_type="application/javascript")
+    """Serve app.js when index.html is loaded from root or /nexus/ path."""
+    resolved = _resolve_nexus_file("app.js")
+    if resolved:
+        return FileResponse(str(resolved), media_type="application/javascript")
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="app.js not found")
 
 

@@ -389,3 +389,96 @@ def test_nexus_root_static_assets():
     assert js_res.status_code == 200
     assert "javascript" in js_res.headers["content-type"]
     assert len(js_res.content) > 1000
+
+
+def test_nexus_nested_static_assets():
+    """Verify GET /nexus/styles.css and GET /nexus/app.js deliver assets."""
+    css_res = client.get("/nexus/styles.css")
+    assert css_res.status_code == 200
+    assert "text/css" in css_res.headers["content-type"]
+    assert len(css_res.content) > 1000
+
+    js_res = client.get("/nexus/app.js")
+    assert js_res.status_code == 200
+    assert "javascript" in js_res.headers["content-type"]
+    assert len(js_res.content) > 1000
+
+
+# ==============================================================================
+# 5. Vercel Serverless Function & Rewrite Simulation Tests
+# ==============================================================================
+
+def test_vercel_root_rewrite_simulation():
+    """Verify that when Vercel forwards a root request to /api/index.py with x-matched-path: /,
+
+    the middleware restores the path and renders the complete Nexus AI landing page.
+    """
+    response = client.get("/api/index.py", headers={"x-matched-path": "/"})
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "Nexus AI" in response.text
+    assert "Automate Claim Denials" in response.text
+    assert "roi-calculator" in response.text
+
+
+def test_vercel_nexus_rewrite_simulation():
+    """Verify Vercel rewrite simulation for /nexus/ via x-matched-path."""
+    response = client.get("/api/index.py", headers={"x-matched-path": "/nexus/"})
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "Nexus AI" in response.text
+
+
+def test_vercel_static_assets_rewrite_simulation():
+    """Verify Vercel rewrite simulation for /styles.css and /app.js via x-matched-path."""
+    css_res = client.get("/api/index.py", headers={"x-matched-path": "/styles.css"})
+    assert css_res.status_code == 200
+    assert "text/css" in css_res.headers["content-type"]
+
+    js_res = client.get("/api/index.py", headers={"x-matched-path": "/app.js"})
+    assert js_res.status_code == 200
+    assert "javascript" in js_res.headers["content-type"]
+
+
+def test_vercel_api_rewrite_simulation():
+    """Verify Vercel rewrite simulation for /api/nexus/roi-estimate via x-matched-path."""
+    calc_payload = {
+        "specialists": 5,
+        "hours_per_week": 20,
+        "hourly_rate": 35.0,
+        "monthly_claims": 3000,
+        "denial_rate_pct": 12.0,
+    }
+    res = client.post("/api/index.py", headers={"x-matched-path": "/api/nexus/roi-estimate"}, json=calc_payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "success"
+    assert data["net_annual_savings"] > 0
+
+
+def test_vercel_direct_entrypoint_fallback():
+    """Verify that calling /api/index.py directly (without x-matched-path header)
+
+    safely falls back to serving the complete Nexus AI landing page (never 404).
+    """
+    response = client.get("/api/index.py")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "Nexus AI" in response.text
+
+
+def test_vercel_entrypoint_module():
+    """Verify that importing app from api.index provides a working TestClient instance."""
+    from api.index import app as vercel_app
+    vercel_client = TestClient(vercel_app)
+
+    # Direct root request
+    root_res = vercel_client.get("/")
+    assert root_res.status_code == 200
+    assert "Nexus AI" in root_res.text
+
+    # Simulated Vercel rewrite
+    v_res = vercel_client.get("/api/index.py", headers={"x-matched-path": "/"})
+    assert v_res.status_code == 200
+    assert "Nexus AI" in v_res.text
+
