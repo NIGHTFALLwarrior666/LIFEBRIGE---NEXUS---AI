@@ -79,6 +79,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "static"
 NEXUS_DIR = BASE_DIR / "nexus_ai"
 
+# Serverless environment directory fallback (Vercel / Cloud Run)
+if not NEXUS_DIR.exists():
+    for candidate in [Path.cwd() / "nexus_ai", Path.cwd(), Path(__file__).resolve().parent]:
+        if (candidate / "index.html").exists():
+            NEXUS_DIR = candidate
+            break
+        if (candidate / "nexus_ai" / "index.html").exists():
+            NEXUS_DIR = candidate / "nexus_ai"
+            break
+
+if not STATIC_DIR.exists():
+    for candidate in [Path.cwd() / "static", Path.cwd(), Path(__file__).resolve().parent]:
+        if (candidate / "static").exists():
+            STATIC_DIR = candidate / "static"
+            break
+
 # Mount static directory for CSS, JS, and UI assets (LifeBridge AI)
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
@@ -196,8 +212,58 @@ async def favicon():
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@app.get("/", response_class=FileResponse, tags=["UI"])
-async def serve_index():
+# --------------------------------------------------------------------------
+# Nexus AI B2B SaaS Landing Page Routes (Production Root & /nexus/)
+# --------------------------------------------------------------------------
+@app.get("/", response_class=FileResponse, tags=["Nexus AI"])
+async def serve_nexus_root():
+    """Serve the Nexus AI B2B SaaS MVP landing page at production root URL '/'."""
+    index_path = NEXUS_DIR / "index.html"
+    if not index_path.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Nexus AI landing page index.html not found.",
+        )
+    return FileResponse(str(index_path))
+
+
+@app.get("/nexus", response_class=FileResponse, tags=["Nexus AI"])
+@app.get("/nexus/", response_class=FileResponse, tags=["Nexus AI"])
+async def serve_nexus_page():
+    """Serve the Nexus AI B2B SaaS MVP landing page at '/nexus/'."""
+    index_path = NEXUS_DIR / "index.html"
+    if not index_path.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Nexus AI landing page index.html not found.",
+        )
+    return FileResponse(str(index_path))
+
+
+@app.get("/styles.css", include_in_schema=False)
+async def serve_root_styles():
+    """Serve styles.css when index.html is loaded from the root path."""
+    css_path = NEXUS_DIR / "styles.css"
+    if css_path.exists():
+        return FileResponse(str(css_path), media_type="text/css")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="styles.css not found")
+
+
+@app.get("/app.js", include_in_schema=False)
+async def serve_root_js():
+    """Serve app.js when index.html is loaded from the root path."""
+    js_path = NEXUS_DIR / "app.js"
+    if js_path.exists():
+        return FileResponse(str(js_path), media_type="application/javascript")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="app.js not found")
+
+
+# --------------------------------------------------------------------------
+# LifeBridge AI Emergency Command Center Frontend
+# --------------------------------------------------------------------------
+@app.get("/lifebridge", response_class=FileResponse, tags=["LifeBridge AI"])
+@app.get("/lifebridge/", response_class=FileResponse, tags=["LifeBridge AI"])
+async def serve_lifebridge_frontend():
     """Serve the Google AI emergency command-center frontend."""
     index_path = STATIC_DIR / "index.html"
     if not index_path.exists():

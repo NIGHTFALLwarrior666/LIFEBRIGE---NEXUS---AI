@@ -28,12 +28,21 @@ client = TestClient(app)
 # ==============================================================================
 
 def test_root_serves_frontend():
-    """Verify GET / delivers the accessible HTML interface."""
+    """Verify GET / delivers the Nexus AI landing page at production root."""
     response = client.get("/")
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
+    assert "Nexus" in response.text
+    assert "Automate Claim Denials" in response.text
+    assert "roi-calculator" in response.text
+
+
+def test_lifebridge_frontend_route():
+    """Verify GET /lifebridge delivers the emergency command-center frontend."""
+    response = client.get("/lifebridge")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
     assert "LifeBridge AI" in response.text
-    assert "From messy human input" in response.text
     assert "Situational Input Console" in response.text
 
 
@@ -358,3 +367,25 @@ def test_nexus_demo_qualification_validation_error():
     }
     response = client.post("/api/nexus/demo-qualification", json=invalid_payload)
     assert response.status_code == 422
+
+
+def test_nexus_landing_without_trailing_slash():
+    """Verify GET /nexus (without trailing slash) serves Nexus AI landing page."""
+    response = client.get("/nexus")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "Nexus" in response.text
+    assert "Automate Claim Denials" in response.text
+
+
+def test_nexus_root_static_assets():
+    """Verify GET /styles.css and GET /app.js deliver assets for root-level loading."""
+    css_res = client.get("/styles.css")
+    assert css_res.status_code == 200
+    assert "text/css" in css_res.headers["content-type"]
+    assert len(css_res.content) > 1000
+
+    js_res = client.get("/app.js")
+    assert js_res.status_code == 200
+    assert "javascript" in js_res.headers["content-type"]
+    assert len(js_res.content) > 1000
