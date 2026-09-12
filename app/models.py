@@ -2,7 +2,7 @@
 
 from enum import Enum
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class SeverityEnum(str, Enum):
@@ -68,8 +68,39 @@ class IncidentAnalysisSchema(BaseModel):
     )
     sources_or_evidence: List[str] = Field(
         default_factory=list,
-        description="Specific observed clues, sounds, text, or visual features supporting the assessment"
+        description="Specific snippets, phrases, or visual elements cited as rationale"
     )
+
+
+# ==============================================================================
+# Nexus AI B2B SaaS Schemas
+# ==============================================================================
+
+class NexusDemoLead(BaseModel):
+    """Schema for Nexus AI demo qualification lead submission."""
+    email: str = Field(description="Work email of the requester")
+    name: str = Field(min_length=2, description="Full name of the requester")
+    company: str = Field(min_length=2, description="Clinic or organization name")
+    job_title: Optional[str] = Field(default=None, description="Job title")
+    company_size: Optional[str] = Field(default=None, description="Monthly claim volume tier")
+    primary_workflow: Optional[str] = Field(default=None, description="Primary bottleneck or problem")
+    selected_slot: Optional[str] = Field(default=None, description="Selected consultation time slot")
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, v: str) -> str:
+        if not v or "@" not in v or "." not in v.split("@")[-1]:
+            raise ValueError("Invalid email format. Please provide a valid work email.")
+        return v.strip().lower()
+
+
+class NexusRoiRequest(BaseModel):
+    """Schema for server-side ROI estimate validation."""
+    specialists: int = Field(ge=1, le=100, default=8)
+    hours_per_week: int = Field(ge=1, le=80, default=22)
+    hourly_rate: float = Field(ge=15.0, le=300.0, default=38.0)
+    monthly_claims: int = Field(ge=100, le=100000, default=4500)
+    denial_rate_pct: float = Field(ge=1.0, le=50.0, default=14.0)
 
 
 class ValidationRecord(BaseModel):

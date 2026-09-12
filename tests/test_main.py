@@ -294,3 +294,67 @@ def test_gemini_service_malformed_json_recovery():
         assert result.mode == "fallback"
         assert result.severity in (SeverityEnum.HIGH, SeverityEnum.CRITICAL)
         assert len(result.recommended_actions) >= 1
+
+
+# ==============================================================================
+# 9. Nexus AI B2B SaaS MVP Landing Page Tests
+# ==============================================================================
+
+def test_nexus_landing_serves_html():
+    """Verify GET /nexus/ serves the complete Nexus AI B2B SaaS landing page."""
+    response = client.get("/nexus/")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "Nexus" in response.text
+    assert "Automate Claim Denials" in response.text
+    assert "roi-calculator" in response.text
+    assert "Midwest Specialty" in response.text
+    assert "HIPAA" in response.text
+
+
+def test_nexus_demo_qualification_endpoint():
+    """Verify POST /api/nexus/demo-qualification processes qualified clinic leads."""
+    lead_payload = {
+        "email": "sarah.lin@beaconhealth.org",
+        "name": "Sarah Lin",
+        "company": "Beacon Health Partners",
+        "job_title": "VP of Operations",
+        "company_size": "5000-15000",
+        "primary_workflow": "Prior-authorization delays and claim rejections",
+        "selected_slot": "Tomorrow at 10:00 AM EST",
+    }
+    response = client.post("/api/nexus/demo-qualification", json=lead_payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert "Demo consultation" in data["message"]
+    assert data["data"]["email"] == "sarah.lin@beaconhealth.org"
+
+
+def test_nexus_roi_estimate_endpoint():
+    """Verify POST /api/nexus/roi-estimate computes accurate operational ROI."""
+    calc_payload = {
+        "specialists": 8,
+        "hours_per_week": 22,
+        "hourly_rate": 38.0,
+        "monthly_claims": 4500,
+        "denial_rate_pct": 14.0,
+    }
+    response = client.post("/api/nexus/roi-estimate", json=calc_payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["net_annual_savings"] > 100000
+    assert data["hours_saved_weekly"] > 100
+    assert data["payback_months"] < 12.0
+    assert data["roi_multiple"] > 1.0
+
+
+def test_nexus_demo_qualification_validation_error():
+    """Verify POST /api/nexus/demo-qualification rejects invalid/missing required fields."""
+    invalid_payload = {
+        "email": "not-an-email",
+        # missing required name and company
+    }
+    response = client.post("/api/nexus/demo-qualification", json=invalid_payload)
+    assert response.status_code == 422

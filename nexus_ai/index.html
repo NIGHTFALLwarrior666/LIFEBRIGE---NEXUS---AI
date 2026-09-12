@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nexus AI — Autonomous B2B SaaS AI agent for healthcare operations and medical billing. Automate claim denials, pre-authorizations, and intake without operational overhead.">
+  <meta name="keywords" content="medical billing AI, healthcare operations automation, claim denial management, prior authorization AI, B2B SaaS AI agent">
+  
+  <title>Nexus AI — Autonomous Medical Billing & Claim Automation</title>
+  
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:title" content="Nexus AI — Automate Claim Denials Without Adding Operational Workload">
+  <meta property="og:description" content="Nexus AI helps healthcare clinics automate claim intake and error validation, reducing claim denials by 92% and saving 18+ hours per week per specialist.">
+  <meta property="og:type" content="website">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2.3'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3C/svg%3E">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Accessible Skip to Content Link -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Ambient Animated Lighting Grid -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+    <div class="ambient-grid"></div>
+  </div>
+
+  <!-- ========================================================================
+       ZONE 1: Sticky Navigation
+       ======================================================================== -->
+  <header class="top-nav" id="top-nav" role="banner">
+    <div class="nav-container">
+      <a href="#hero" class="brand" aria-label="Nexus AI Home">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+        </div>
+        <span class="brand-name">Nexus<span style="color: var(--primary-light);">AI</span></span>
+        <span class="brand-badge">B2B SaaS MVP</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#problem" class="nav-link">Problem</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#capabilities" class="nav-link">Capabilities</a></li>
+          <li><a href="#roi-calculator" class="nav-link">ROI Calculator</a></li>
+          <li><a href="#use-cases" class="nav-link">Solutions</a></li>
+          <li><a href="#security" class="nav-link">Security</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions: Niche Selector & Primary CTA -->
+      <div class="nav-actions">
+        <!-- PRD Section 0 Positioning Switcher -->
+        <div class="niche-selector-wrapper" title="Switch positioning variables">
+          <label for="niche-selector" class="niche-label">Niche:</label>
+          <select id="niche-selector" class="niche-select" aria-label="Select industry positioning preset">
+            <option value="medical_billing" selected>Medical Billing (Default)</option>
+            <option value="financial_compliance">Financial Compliance</option>
+            <option value="supply_chain">Supply Chain Invoicing</option>
+          </select>
+        </div>
+
+        <a href="#demo-modal" class="btn btn-primary btn-open-demo" id="nav-cta-btn">
+          <span>Book a Demo</span>
+          <span class="btn-icon-right" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-drawer" id="mobile-nav-drawer" role="dialog" aria-label="Mobile Navigation Drawer">
+    <a href="#problem" class="mobile-nav-link nav-link">Problem</a>
+    <a href="#how-it-works" class="mobile-nav-link nav-link">How It Works</a>
+    <a href="#capabilities" class="mobile-nav-link nav-link">Capabilities</a>
+    <a href="#roi-calculator" class="mobile-nav-link nav-link">ROI Calculator</a>
+    <a href="#use-cases" class="mobile-nav-link nav-link">Solutions by Role</a>
+    <a href="#security" class="mobile-nav-link nav-link">Security & HIPAA</a>
+    <a href="#faq" class="mobile-nav-link nav-link">FAQ</a>
+    <a href="#demo-modal" class="btn btn-primary btn-open-demo" style="width: 100%; margin-top: 10px;">Book a Demo</a>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ========================================================================
+         ZONE 2: Hero Section
+         ======================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          
+          <!-- Hero Copy -->
+          <div class="hero-content">
+            <div class="eyebrow" id="hero-eyebrow">
+              <span class="pulse-dot" aria-hidden="true"></span>
+              <span id="hero-eyebrow-text">AI Automation for Medical Billing</span>
+            </div>
+
+            <h1 class="hero-headline" id="hero-headline">
+              Automate Claim Denials & Pre-Authorizations <span class="gradient-text">Without Adding Operational Workload.</span>
+            </h1>
+
+            <p class="hero-subheadline" id="hero-subheadline">
+              Nexus AI helps mid-sized healthcare clinics automate repetitive intake, eliminate 92% of billing errors, and give Operations Managers complete audit control.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#demo-modal" class="btn btn-primary btn-lg btn-open-demo" id="hero-primary-cta">
+                <span>Book a Demo</span>
+                <span class="btn-icon-right" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </a>
+
+              <a href="#roi-calculator" class="btn btn-secondary btn-lg" id="hero-secondary-cta">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+                <span>Calculate Your ROI</span>
+              </a>
+            </div>
+
+            <div class="hero-trust-badge" id="hero-trust-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span id="hero-trust-text">Built for healthcare operations teams processing 5,000+ claims monthly.</span>
+            </div>
+          </div>
+
+          <!-- Hero Interactive Claim Triage Console -->
+          <div class="hero-interactive-card" role="region" aria-label="Interactive Claim Triage Simulation Console">
+            <div class="interactive-card-header">
+              <div class="card-title-group">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                <strong style="font-size: 0.9375rem; color: #fff;">Nexus AI Claim Engine</strong>
+              </div>
+              <span class="status-indicator">
+                <span class="pulse-dot" style="background: var(--accent-emerald);"></span>
+                <span id="claim-status-tag">Auto-Scrubbed & Cleared</span>
+              </span>
+            </div>
+
+            <!-- Simulated Claim Item -->
+            <div class="claim-feed-item">
+              <div class="claim-meta">
+                <span class="claim-meta-id" id="claim-id">CLM-8942-BCBS</span>
+                <span>Encounter: In-Office Specialist</span>
+              </div>
+              <div class="claim-body">
+                <div class="claim-patient" id="claim-patient">Eleanor Vance · DOB: 04/12/1978</div>
+                <div class="claim-diagnosis" id="claim-diagnosis">Blue Cross Blue Shield of IL · Knee Arthroscopy (CPT 29881 + ICD-10 M23.22)</div>
+              </div>
+              <div class="claim-audit-resolved" id="claim-audit-alert">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <div>
+                  <strong>Validation Succeeded:</strong> Nexus AI auto-identified distinct procedural service, appended Modifier 59, and verified policy against BCBS Clearinghouse Rule v4.8.
+                </div>
+              </div>
+            </div>
+
+            <!-- Real-Time Metrics -->
+            <div class="interactive-card-stats">
+              <div class="stat-box">
+                <div class="stat-val cyan" id="claim-confidence">99.4%</div>
+                <div class="stat-label">Model Confidence</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val emerald">14 ms</div>
+                <div class="stat-label">Rule Evaluation</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val">0</div>
+                <div class="stat-label">Manual Edits</div>
+              </div>
+            </div>
+
+            <!-- Interactive Action Bar -->
+            <div class="card-action-bar">
+              <button class="btn btn-secondary" id="btn-simulate-claim" aria-label="Simulate Next Live Claim">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                </svg>
+                Simulate Next Claim
+              </button>
+              <button class="btn btn-secondary" id="toggle-human-review" data-mode="manual" aria-label="Toggle Human in the Loop">
+                Human-in-the-Loop Mode
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 3: Social Proof & Measurable Outcomes
+         ======================================================================== -->
+    <section class="social-proof-section" id="social-proof">
+      <div class="container">
+        
+        <p class="trust-logos-label">Trusted by leading regional healthcare networks & specialty clinics</p>
+        
+        <!-- Customer Logos -->
+        <div class="logos-grid">
+          <div class="logo-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
+            <span>Apex Health</span>
+          </div>
+          <div class="logo-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>MetroCare Clinics</span>
+          </div>
+          <div class="logo-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Beacon Orthopedics</span>
+          </div>
+          <div class="logo-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <span>Summit Health Partners</span>
+          </div>
+          <div class="logo-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            <span>CarePoint Medical</span>
+          </div>
+        </div>
+
+        <!-- 4 Quantified Outcome Metrics -->
+        <div class="metrics-strip">
+          <div class="metric-card">
+            <div class="metric-number highlight">92%</div>
+            <div class="metric-title">Fewer Denials</div>
+            <div class="metric-desc">Eliminating first-pass rejections prior to clearinghouse transmission</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">18.5 hrs</div>
+            <div class="metric-title">Saved / Week</div>
+            <div class="metric-desc">Liberated per billing specialist from repetitive manual data reconciliation</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number highlight">4.8x</div>
+            <div class="metric-title">Average ROI</div>
+            <div class="metric-desc">Measured net cost-recovery across clinic deployments in first 90 days</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">$320K</div>
+            <div class="metric-title">Avg. Annual Savings</div>
+            <div class="metric-desc">Reduction in uncollected revenue write-offs and billing labor overtime</div>
+          </div>
+        </div>
+
+        <!-- Measurable Outcome Testimonial (PRD Priority Rule) -->
+        <div class="featured-quote-card">
+          <div class="quote-mark" aria-hidden="true">“</div>
+          <div class="quote-body">
+            <blockquote>
+              Nexus AI reduced our prior-authorization review time from 6 hours to 42 minutes per case and eliminated over 90% of preventable denials. Our billing team finally has breathing room to focus on high-value patient care.
+            </blockquote>
+            <div class="quote-author">
+              <div class="author-avatar">SL</div>
+              <div>
+                <div class="author-name">Sarah Lin, RN, MHA</div>
+                <div class="author-role">VP of Clinical & Revenue Operations · Beacon Health Network (18 Locations)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 4: Problem Definition
+         ======================================================================== -->
+    <section class="problem-section" id="problem">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">The Operational Reality</div>
+          <h2 class="section-title" id="problem-heading">
+            Manual Claim Processing is Creating <span class="gradient-text">Unsustainable Overhead</span> for Healthcare Clinics.
+          </h2>
+          <p class="section-subtitle">
+            Repetitive workflows and fragmented payer rules trap high-skilled billing specialists in non-stop triage, leading to missed filing deadlines and unrecovered revenue.
+          </p>
+        </div>
+
+        <!-- PRD Copy Sequence: Current process -> Manual dependency -> Error -> Consequence -->
+        <div class="problem-flow-sequence" aria-label="Operational failure sequence">
+          <div class="flow-step">1. EHR Encounter Intake</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">2. Manual Code Copying</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step active">3. Miscoded Modifiers & Delays</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">4. Clearinghouse Denial</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step active">5. $45+ Rework Loop & Write-off</div>
+        </div>
+
+        <!-- 3 Core Problem Cards -->
+        <div class="problems-grid">
+          
+          <div class="problem-card">
+            <div class="problem-icon-wrapper" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="9" y1="15" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <h3>Manual Work & Intake Drag</h3>
+            <p>
+              Billing teams spend over 55% of their day manually copying clinical records between EHRs (Epic, Cerner, AthenaHealth) and payer portals to confirm basic eligibility.
+            </p>
+            <div class="problem-consequence-tag">Labor Drain: 22 hrs / week per operator</div>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon-wrapper" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <h3>Preventable Rejections & Errors</h3>
+            <p>
+              Minor transposition mistakes—missing modifier 25/59, outdated ICD-10 diagnostic codes, or unverified secondary coverage—trigger costly claim rejections.
+            </p>
+            <div class="problem-consequence-tag">Financial Drag: $48 avg. rework cost per claim</div>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon-wrapper" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3>Capacity Ceilings & Burnout</h3>
+            <p>
+              As clinic patient volume scales, hiring and retaining certified billing specialists becomes a major operational hurdle, directly slowing down cash collections.
+            </p>
+            <div class="problem-consequence-tag">Operational Drag: 48 days avg. in Accounts Receivable</div>
+          </div>
+
+        </div>
+
+        <!-- Business Consequence Banner -->
+        <div class="consequence-banner">
+          <div class="consequence-item">
+            <h4>$45 - $118</h4>
+            <p>Direct Cost to Rework Each Denied Claim</p>
+          </div>
+          <div class="consequence-item">
+            <h4>48 Days</h4>
+            <p>Average Wait Time in Accounts Receivable</p>
+          </div>
+          <div class="consequence-item">
+            <h4>12.4%</h4>
+            <p>Industry Claims Abandoned or Written Off</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 5: How Nexus AI Works
+         ======================================================================== -->
+    <section class="how-it-works-section" id="how-it-works">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">The Mechanism</div>
+          <h2 class="section-title">
+            From manual triage to <span class="gradient-text">automated execution.</span>
+          </h2>
+          <p class="section-subtitle">
+            Nexus AI replaces fragile robotic scripts with deterministic reasoning agents designed specifically for high-stakes healthcare revenue operations.
+          </p>
+        </div>
+
+        <!-- 4-Step Mechanism -->
+        <div class="workflow-steps-grid">
+          
+          <div class="step-card">
+            <div class="step-number-bubble">1</div>
+            <h3>Connect</h3>
+            <p>
+              Nexus AI securely integrates with your EHR (Epic, AthenaHealth, Cerner) and clearinghouses via bi-directional FHIR, HL7, and EDI 837/835 APIs.
+            </p>
+            <span class="step-detail-pill">Bi-directional FHIR API</span>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-bubble">2</div>
+            <h3>Analyze</h3>
+            <p>
+              The agent evaluates clinical notes, diagnostic codes, and payer guidelines against a live matrix of 400+ payer policy rules in milliseconds.
+            </p>
+            <span class="step-detail-pill">Pre-submission rule check</span>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-bubble">3</div>
+            <h3>Act</h3>
+            <p>
+              Nexus AI automatically applies missing modifiers, appends chart documentation, resolves clearinghouse edits, and submits clean claims.
+            </p>
+            <span class="step-detail-pill">Automated claim scrubbing</span>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-bubble">4</div>
+            <h3>Verify & Escalate</h3>
+            <p>
+              Every decision is immutably logged for HIPAA compliance. Low-confidence edge cases are routed to human specialists with 1-click recommendations.
+            </p>
+            <span class="step-detail-pill">Human-in-the-loop safeguards</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 6: Core Capabilities
+         ======================================================================== -->
+    <section class="capabilities-section" id="capabilities">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">Enterprise Capabilities</div>
+          <h2 class="section-title">
+            Engineered for <span class="gradient-text">operational autonomy</span> with human control.
+          </h2>
+          <p class="section-subtitle">
+            Six foundational pillars purpose-built to eliminate repetitive billing drag and secure revenue velocity.
+          </p>
+        </div>
+
+        <!-- 6 Capability Cards answering What, Where, Manual Work Removed, and Business Result -->
+        <div class="capabilities-grid">
+          
+          <!-- Cap 1 -->
+          <div class="capability-card">
+            <div class="capability-icon-wrap" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <h3>Workflow Automation</h3>
+            <p>
+              Automate repetitive claim intake, pre-authorization document retrieval, and billing scrubs from patient discharge through final clearinghouse receipt.
+            </p>
+            <div class="cap-specs">
+              <div class="spec-row"><span class="spec-label">Operates in:</span><span class="spec-val">EHR & Clearinghouses</span></div>
+              <div class="spec-row"><span class="spec-label">Removes:</span><span class="spec-val">Manual data entry & re-keying</span></div>
+              <div class="spec-row"><span class="spec-label">Business Result:</span><span class="spec-val">88% intake velocity increase</span></div>
+            </div>
+          </div>
+
+          <!-- Cap 2 -->
+          <div class="capability-card">
+            <div class="capability-icon-wrap" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+              </svg>
+            </div>
+            <h3>Predictive Decision Support</h3>
+            <p>
+              Flags coverage mismatches, missing clinical attachments, and unbundled codes before claims are sent to clearinghouses, preventing downstream denials.
+            </p>
+            <div class="cap-specs">
+              <div class="spec-row"><span class="spec-label">Operates in:</span><span class="spec-val">Pre-submission gateway</span></div>
+              <div class="spec-row"><span class="spec-label">Removes:</span><span class="spec-val">Unbundling & modifier errors</span></div>
+              <div class="spec-row"><span class="spec-label">Business Result:</span><span class="spec-val">92% first-pass claim clean rate</span></div>
+            </div>
+          </div>
+
+          <!-- Cap 3 -->
+          <div class="capability-card">
+            <div class="capability-icon-wrap" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+              </svg>
+            </div>
+            <h3>Autonomous Agent Execution</h3>
+            <p>
+              Allows Nexus AI to perform authorized actions across connected systems—such as drafting appeal packets, updating encounter flags, and submitting batches.
+            </p>
+            <div class="cap-specs">
+              <div class="spec-row"><span class="spec-label">Operates in:</span><span class="spec-val">Payer portals & Availity</span></div>
+              <div class="spec-row"><span class="spec-label">Removes:</span><span class="spec-val">Manual portal navigation</span></div>
+              <div class="spec-row"><span class="spec-label">Business Result:</span><span class="spec-val">Zero appeal filing backlogs</span></div>
+            </div>
+          </div>
+
+          <!-- Cap 4 -->
+          <div class="capability-card">
+            <div class="capability-icon-wrap" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3>Smart Human-in-the-Loop Review</h3>
+            <p>
+              Configurable confidence thresholds automatically route ambiguous cases to the designated billing specialist with exact recommended adjustments.
+            </p>
+            <div class="cap-specs">
+              <div class="spec-row"><span class="spec-label">Operates in:</span><span class="spec-val">Specialist review queue</span></div>
+              <div class="spec-row"><span class="spec-label">Removes:</span><span class="spec-val">Guesswork on complex edge cases</span></div>
+              <div class="spec-row"><span class="spec-label">Business Result:</span><span class="spec-val">100% human operational oversight</span></div>
+            </div>
+          </div>
+
+          <!-- Cap 5 -->
+          <div class="capability-card">
+            <div class="capability-icon-wrap" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3>Auditability & Governance</h3>
+            <p>
+              Maintains an immutable cryptographic record of every prompt, rule lookup, confidence rating, and automated action for total regulatory transparency.
+            </p>
+            <div class="cap-specs">
+              <div class="spec-row"><span class="spec-label">Operates in:</span><span class="spec-val">Encrypted compliance ledger</span></div>
+              <div class="spec-row"><span class="spec-label">Removes:</span><span class="spec-val">Audit preparation panic</span></div>
+              <div class="spec-row"><span class="spec-label">Business Result:</span><span class="spec-val">100% HIPAA & CMS audit compliance</span></div>
+            </div>
+          </div>
+
+          <!-- Cap 6 -->
+          <div class="capability-card">
+            <div class="capability-icon-wrap" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/>
+                <rect width="20" height="8" x="2" y="14" rx="2" ry="2"/>
+                <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+              </svg>
+            </div>
+            <h3>Turnkey EHR & Payer Integrations</h3>
+            <p>
+              Pre-built bi-directional connectors for Epic, AthenaHealth, Cerner, Kareo, Waystar, and Change Healthcare with zero custom developer overhead.
+            </p>
+            <div class="cap-specs">
+              <div class="spec-row"><span class="spec-label">Operates in:</span><span class="spec-val">EHR & Clearinghouse stack</span></div>
+              <div class="spec-row"><span class="spec-label">Removes:</span><span class="spec-val">Expensive 6-month IT integrations</span></div>
+              <div class="spec-row"><span class="spec-label">Business Result:</span><span class="spec-val">Live in under 14 business days</span></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 7: Business Impact & Interactive ROI Calculator
+         ======================================================================== -->
+    <section class="roi-section" id="roi-calculator">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">Measurable Business Impact</div>
+          <h2 class="section-title">
+            Measure the impact in <span class="gradient-text">concrete business terms.</span>
+          </h2>
+          <p class="section-subtitle">
+            Configure your clinic's billing team size and monthly claim volume to model your annual net savings, recovered labor hours, and expected payback period.
+          </p>
+        </div>
+
+        <div class="roi-calculator-container" role="region" aria-label="Interactive ROI Calculator">
+          
+          <!-- Sliders & Inputs -->
+          <div class="roi-inputs-col">
+            <h3>Clinic Operating Parameters</h3>
+            <p>Adjust the sliders below to match your clinic's actual workflow volume:</p>
+
+            <!-- Slider 1 -->
+            <div class="calculator-group">
+              <div class="calc-label-row">
+                <label for="calc-specialists" class="calc-label">Billing Specialists / Operators</label>
+                <span class="calc-val-pill" id="val-specialists">8 specialists</span>
+              </div>
+              <input type="range" id="calc-specialists" class="range-slider" min="1" max="40" value="8" step="1">
+            </div>
+
+            <!-- Slider 2 -->
+            <div class="calculator-group">
+              <div class="calc-label-row">
+                <label for="calc-hours" class="calc-label">Manual Review Hours / Specialist / Wk</label>
+                <span class="calc-val-pill" id="val-hours">22 hrs/wk</span>
+              </div>
+              <input type="range" id="calc-hours" class="range-slider" min="5" max="40" value="22" step="1">
+            </div>
+
+            <!-- Slider 3 -->
+            <div class="calculator-group">
+              <div class="calc-label-row">
+                <label for="calc-wage" class="calc-label">Average Specialist Labor Cost ($/hr)</label>
+                <span class="calc-val-pill" id="val-wage">$38/hr</span>
+              </div>
+              <input type="range" id="calc-wage" class="range-slider" min="25" max="90" value="38" step="1">
+            </div>
+
+            <!-- Slider 4 -->
+            <div class="calculator-group">
+              <div class="calc-label-row">
+                <label for="calc-volume" class="calc-label">Monthly Claim Volume</label>
+                <span class="calc-val-pill" id="val-volume">4,500 claims/mo</span>
+              </div>
+              <input type="range" id="calc-volume" class="range-slider" min="500" max="25000" value="4500" step="250">
+            </div>
+
+            <!-- Slider 5 -->
+            <div class="calculator-group">
+              <div class="calc-label-row">
+                <label for="calc-denial" class="calc-label">Current Initial Denial / Rejection Rate</label>
+                <span class="calc-val-pill" id="val-denial">14% rate</span>
+              </div>
+              <input type="range" id="calc-denial" class="range-slider" min="5" max="30" value="14" step="1">
+            </div>
+          </div>
+
+          <!-- Dynamic Output Dashboard -->
+          <div class="roi-results-col">
+            <div class="results-header">
+              <h4>Projected Annual Economic Return</h4>
+            </div>
+
+            <div class="primary-result-box">
+              <div class="result-caption">Estimated Annual Net Operational Savings</div>
+              <div class="result-big-number" id="out-annual-savings">$296,880</div>
+            </div>
+
+            <div class="result-details-grid">
+              <div class="result-metric-card">
+                <div class="rm-label">Current Operational Drag</div>
+                <div class="rm-val" id="out-current-cost">$412,416</div>
+              </div>
+              <div class="result-metric-card">
+                <div class="rm-label">Hours Saved / Week</div>
+                <div class="rm-val" id="out-hours-saved">150 hrs</div>
+              </div>
+              <div class="result-metric-card">
+                <div class="rm-label">Estimated Payback Period</div>
+                <div class="rm-val" id="out-payback-period">1.8 Months</div>
+              </div>
+              <div class="result-metric-card">
+                <div class="rm-label">Projected 3-Year ROI</div>
+                <div class="rm-val" style="color: var(--accent-emerald);">485%</div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg roi-cta-btn" id="btn-lock-savings">
+              <span>Lock In These Savings — Book a Demo</span>
+              <span class="btn-icon-right" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 8: Use Cases by Role
+         ======================================================================== -->
+    <section class="use-cases-section" id="use-cases">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">Solutions by Stakeholder</div>
+          <h2 class="section-title">
+            Purpose-built for every stakeholder in <span class="gradient-text">the revenue cycle.</span>
+          </h2>
+          <p class="section-subtitle">
+            Whether managing daily claim triage or financial health, Nexus AI delivers measurable alignment across your entire leadership team.
+          </p>
+        </div>
+
+        <!-- Role Switcher Tabs -->
+        <div class="persona-tabs-nav" role="tablist" aria-label="Buyer Persona Navigation">
+          <button class="persona-tab active" data-persona="operations" role="tab" aria-selected="true">For Operations</button>
+          <button class="persona-tab" data-persona="finance" role="tab" aria-selected="false">For Finance</button>
+          <button class="persona-tab" data-persona="compliance" role="tab" aria-selected="false">For Compliance</button>
+          <button class="persona-tab" data-persona="leadership" role="tab" aria-selected="false">For Leadership</button>
+        </div>
+
+        <!-- Dynamic Content Card -->
+        <div class="persona-card" id="persona-display-card">
+          <div class="persona-card-content">
+            <h3 id="persona-title">Operations & Billing Managers</h3>
+            <p id="persona-lead">
+              Eliminate repetitive intake bottlenecks, clear pre-auth queues, and protect your team from burnout.
+            </p>
+            <ul class="persona-benefits-list" id="persona-benefits">
+              <li class="benefit-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Automate 88%+ of standard prior-authorization intake and claim scrubbing.</span>
+              </li>
+              <li class="benefit-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Reduce average claim triage turnaround time from 6 hours to 42 minutes.</span>
+              </li>
+              <li class="benefit-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Prevent specialist turnover and overtime costs during seasonal volume surges.</span>
+              </li>
+              <li class="benefit-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Real-time exception routing with 1-click specialist approval workflows.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="persona-preview-box">
+            <div class="preview-chip-row">
+              <span class="preview-chip green" id="persona-metric-1">88% Less Manual Entry</span>
+              <span class="preview-chip blue" id="persona-metric-2">42 min Turnaround</span>
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 12px;">KEY OUTCOME PILLAR:</div>
+            <div style="font-size: 1.125rem; font-weight: 700; color: var(--text-pure);" id="persona-badge">
+              Operational Throughput
+            </div>
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle); font-size: 0.8125rem; color: var(--text-secondary);">
+              "Nexus AI gives our operations supervisors immediate visibility over backlogs that used to take days of spreadsheet reconciliation to uncover."
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 9: Security & Reliability (PRD Strict Separation)
+         ======================================================================== -->
+    <section class="security-section" id="security">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">Enterprise Trust & Governance</div>
+          <h2 class="section-title">
+            Designed for <span class="gradient-text">controlled enterprise workflows.</span>
+          </h2>
+          <p class="section-subtitle">
+            Zero black-box decisions. In strict accordance with our enterprise transparency policy, we explicitly demarcate currently active controls from upcoming roadmap milestones.
+          </p>
+        </div>
+
+        <!-- PRD Strict Requirement: Currently Available vs. On Roadmap -->
+        <div class="security-comparison-grid">
+          
+          <!-- Column 1: Currently Available -->
+          <div class="security-column available">
+            <span class="column-header-badge active">Currently Active & Enforced</span>
+            <h3>Production Security Controls</h3>
+            <p>Non-negotiable data isolation, encryption, and governance standards active in all production environments today:</p>
+
+            <ul class="security-items-list">
+              <li class="sec-item">
+                <div class="sec-icon green">✓</div>
+                <div class="sec-text">
+                  <h4>HIPAA BAA Ready & Enforced</h4>
+                  <p>Comprehensive Business Associate Agreements executed with all covered entities with zero patient data exposure.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon green">✓</div>
+                <div class="sec-text">
+                  <h4>Zero Model Training on Customer Data</h4>
+                  <p>Patient health records and clinic claim feeds are strictly excluded from foundational LLM training or fine-tuning.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon green">✓</div>
+                <div class="sec-text">
+                  <h4>Military-Grade Encryption</h4>
+                  <p>TLS 1.3 encryption in transit with perfect forward secrecy and AES-256 encryption at rest with customer-isolated KMS keys.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon green">✓</div>
+                <div class="sec-text">
+                  <h4>Role-Based Access Control & SSO</h4>
+                  <p>Fine-grained permission controls, Okta/SAML 2.0 single sign-on, and complete multi-factor authentication enforcement.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon green">✓</div>
+                <div class="sec-text">
+                  <h4>99.95% High-Availability SLA</h4>
+                  <p>Multi-zone redundant infrastructure with automated failover and continuous health probe verification.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2: On Roadmap -->
+          <div class="security-column roadmap">
+            <span class="column-header-badge roadmap">In Audit & On Roadmap</span>
+            <h3>Enterprise Roadmap Milestones</h3>
+            <p>Upcoming certifications and compliance frameworks currently undergoing external auditing or engineering implementation:</p>
+
+            <ul class="security-items-list">
+              <li class="sec-item">
+                <div class="sec-icon blue">⏳</div>
+                <div class="sec-text">
+                  <h4>SOC 2 Type II Certification (In Audit)</h4>
+                  <p>Currently undergoing the observation window with Schellman & Co; formal report issuance slated for Q3 2026.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon blue">⏳</div>
+                <div class="sec-text">
+                  <h4>FedRAMP Moderate Readiness</h4>
+                  <p>Documentation phase initiated for public health and VA hospital network automated integration standards.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon blue">⏳</div>
+                <div class="sec-text">
+                  <h4>Automated Payer Portal Biometrics</h4>
+                  <p>Hardware-token session verification for autonomous clearinghouse credential rotations.</p>
+                </div>
+              </li>
+              <li class="sec-item">
+                <div class="sec-icon blue">⏳</div>
+                <div class="sec-text">
+                  <h4>HITRUST CSF r2 Validation</h4>
+                  <p>Targeting expanded common security framework certification in Q4 2026.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 10: Customer Proof / Case Study
+         ======================================================================== -->
+    <section class="case-study-section" id="case-study">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">Verified Customer Outcomes</div>
+          <h2 class="section-title">
+            How Midwest Specialty Clinics <span class="gradient-text">eliminated $284K</span> in billing rework.
+          </h2>
+          <p class="section-subtitle">
+            A comprehensive case study detailing baseline metrics, implementation intervention, and 90-day validated business outcomes.
+          </p>
+        </div>
+
+        <!-- PRD Case Study Formula: Baseline -> Intervention -> Measurement -> Outcome -->
+        <div class="case-study-card">
+          <div class="case-study-header">
+            <div class="case-study-title-group">
+              <h3>Midwest Specialty Healthcare Network</h3>
+              <p>14 Multi-Specialty Clinic Locations · 28,000 Monthly Patient Encounters</p>
+            </div>
+            <span class="case-study-badge">90-Day Production Case Study</span>
+          </div>
+
+          <div class="case-study-grid">
+            
+            <div class="case-phase-card">
+              <span class="phase-tag before">1. Baseline (Before)</span>
+              <h4>High Denials & Backlog</h4>
+              <p>
+                16.8% initial claim denial rate, 6-hour average prior-authorization turnaround, and 3 full-time billing staff dedicated solely to manual appeal letters.
+              </p>
+            </div>
+
+            <div class="case-phase-card">
+              <span class="phase-tag action">2. Intervention</span>
+              <h4>Turnkey Nexus Deployment</h4>
+              <p>
+                Connected to Epic EHR via FHIR API in 11 business days. Active pre-submission scrub and automated modifier verification deployed across all 14 clinics.
+              </p>
+            </div>
+
+            <div class="case-phase-card">
+              <span class="phase-tag measure">3. Measurement</span>
+              <h4>84,000 Claims Processed</h4>
+              <p>
+                Continuous telemetry measured over 90 days across 4 major commercial payers (BCBS, Aetna, UHC, Cigna) and Medicare Part B claims.
+              </p>
+            </div>
+
+            <div class="case-phase-card">
+              <span class="phase-tag outcome">4. Measured Outcome</span>
+              <h4>1.3% Denial Rate</h4>
+              <p>
+                Denials dropped by 92%, turnaround reduced to 42 minutes, and $284,000 in direct operational savings realized in Year 1 without adding staff.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Case Metrics Footer -->
+          <div class="case-metrics-footer">
+            <div class="cm-item">
+              <div class="cm-num">92%</div>
+              <div class="cm-label">Denial Reduction</div>
+            </div>
+            <div class="cm-item">
+              <div class="cm-num">42 min</div>
+              <div class="cm-label">Turnaround (was 6 hrs)</div>
+            </div>
+            <div class="cm-item">
+              <div class="cm-num">$284,000</div>
+              <div class="cm-label">Net 1st-Year Savings</div>
+            </div>
+            <div class="cm-item">
+              <div class="cm-num">11 Days</div>
+              <div class="cm-label">Deployment to Production</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 11: FAQ (Objection Handling)
+         ======================================================================== -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="eyebrow">Objection Handling & FAQ</div>
+          <h2 class="section-title">
+            Frequently Asked <span class="gradient-text">Questions</span>
+          </h2>
+          <p class="section-subtitle">
+            Direct answers to common questions about deployment, integration, security, and human oversight.
+          </p>
+        </div>
+
+        <!-- 8 Questions Mandated by PRD -->
+        <div class="faq-accordion-list" role="region" aria-label="Frequently Asked Questions Accordion">
+          
+          <!-- Q1: Product -->
+          <div class="faq-item active">
+            <button class="faq-question-btn" id="faq-btn-1" aria-expanded="true" aria-controls="faq-panel-1">
+              <span>What exactly does Nexus AI automate?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-1" role="region" aria-labelledby="faq-btn-1" style="max-height: 200px;">
+              <p>
+                Nexus AI automates the pre-submission claim scrub, prior-authorization verification, modifier validation (e.g. 25, 59), clinical attachment matching, clearinghouse error reconciliation, and appeal letter generation. It operates directly between your EHR and clearinghouse to prevent denials before submission.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q2: Implementation -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-2" aria-expanded="false" aria-controls="faq-panel-2">
+              <span>How long does implementation take?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-2" role="region" aria-labelledby="faq-btn-2">
+              <p>
+                Standard implementation typically requires 10 to 14 business days. Because Nexus AI leverages pre-built FHIR and HL7 bi-directional connectors for systems like Epic, Cerner, and AthenaHealth, your internal IT team requires minimal setup time—usually under 4 hours of total administrative effort.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q3: Integrations -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-3" aria-expanded="false" aria-controls="faq-panel-3">
+              <span>Which systems can Nexus AI connect to?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-3" role="region" aria-labelledby="faq-btn-3">
+              <p>
+                Nexus AI connects natively to major EHRs including Epic, AthenaHealth, Oracle Health (Cerner), eClinicalWorks, Kareo, and NextGen, as well as leading clearinghouses such as Waystar, Change Healthcare, Availity, and TriZetto. Custom HL7 feed support is also available.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q4: Human Oversight -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-4" aria-expanded="false" aria-controls="faq-panel-4">
+              <span>Can our team review or override AI decisions?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-4" role="region" aria-labelledby="faq-btn-4">
+              <p>
+                Yes, absolutely. You retain complete sovereign control. Nexus AI features configurable confidence thresholds (e.g., 95%). Any claim falling below your designated threshold is automatically routed to your billing specialist queue with suggested corrections, requiring a 1-click human confirmation before transmission.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q5: Security -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-5" aria-expanded="false" aria-controls="faq-panel-5">
+              <span>How does Nexus AI protect customer & patient data?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-5" role="region" aria-labelledby="faq-btn-5">
+              <p>
+                We enforce a zero-data-retention policy for AI model training. All data is processed in isolated tenant containers, encrypted with AES-256 at rest and TLS 1.3 in transit. We sign comprehensive HIPAA Business Associate Agreements (BAAs) with all clinic partners prior to production activation.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q6: Accuracy -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-6" aria-expanded="false" aria-controls="faq-panel-6">
+              <span>How does Nexus AI handle uncertain or edge cases?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-6" role="region" aria-labelledby="faq-btn-6">
+              <p>
+                Nexus AI uses deterministic validation layers alongside probabilistic reasoning. If a payer rule is ambiguous or if contradictory medical records are detected, the system executes a safe negative constraint: it blocks unverified auto-submission and immediately flags the specific anomaly for specialist inspection.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q7: Pricing -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-7" aria-expanded="false" aria-controls="faq-panel-7">
+              <span>How is Nexus AI priced?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-7" role="region" aria-labelledby="faq-btn-7">
+              <p>
+                Nexus AI uses a predictable volume-tiered subscription based on monthly processed claims, with zero per-seat specialist penalties. This aligns our pricing directly with your operational cost savings and ensures your team can scale without worrying about user license seat caps.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q8: Trial -->
+          <div class="faq-item">
+            <button class="faq-question-btn" id="faq-btn-8" aria-expanded="false" aria-controls="faq-panel-8">
+              <span>Can we test Nexus AI before purchasing?</span>
+              <span class="faq-toggle-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer-panel" id="faq-panel-8" role="region" aria-labelledby="faq-btn-8">
+              <p>
+                Yes. We offer qualified clinics a 30-day sandbox pilot using historical de-identified claim batches. This allows your operations and finance teams to benchmark Nexus AI's denial detection and clean-claim rates against your actual historical data before going live.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ZONE 12: Final Conversion Block
+         ======================================================================== -->
+    <section class="final-cta-section" id="final-cta">
+      <div class="container">
+        
+        <div class="final-cta-card">
+          <h2 class="final-cta-headline">
+            See what Nexus AI could automate <span class="gradient-text">for your team.</span>
+          </h2>
+          <p class="final-cta-subhead">
+            Review your current workflow with a Nexus AI healthcare operations specialist and identify the highest-value automation opportunities in your revenue cycle.
+          </p>
+
+          <div class="final-cta-btn-group">
+            <a href="#demo-modal" class="btn btn-primary btn-lg btn-open-demo">
+              <span>Book a Demo</span>
+              <span class="btn-icon-right" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </span>
+            </a>
+
+            <a href="#roi-calculator" class="btn btn-secondary btn-lg">
+              <span>Calculate Your Potential Savings</span>
+            </a>
+          </div>
+
+          <div class="qualification-note">
+            ✓ Typically takes 20 minutes · Custom clinic ROI model included · Zero obligation
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       ZONE 13: Footer
+       ======================================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="#hero" class="brand" aria-label="Nexus AI Home">
+            <div class="brand-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+            </div>
+            <span class="brand-name">Nexus<span style="color: var(--primary-light);">AI</span></span>
+          </a>
+          <p>
+            Autonomous B2B SaaS platform for healthcare operations and claim denial prevention. Helping clinics scale without administrative overhead.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Product</h5>
+          <ul class="footer-links">
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#capabilities">Core Capabilities</a></li>
+            <li><a href="#roi-calculator">ROI Calculator</a></li>
+            <li><a href="#security">Security Architecture</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Solutions</h5>
+          <ul class="footer-links">
+            <li><a href="#use-cases">For Operations</a></li>
+            <li><a href="#use-cases">For Finance & A/R</a></li>
+            <li><a href="#use-cases">For Compliance</a></li>
+            <li><a href="#use-cases">For Executive Leadership</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <ul class="footer-links">
+            <li><a href="#case-study">Midwest Health Case Study</a></li>
+            <li><a href="#faq">Objection FAQ</a></li>
+            <li><a href="#security">HIPAA BAA Guidelines</a></li>
+            <li><a href="#security">Security Whitepaper</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul class="footer-links">
+            <li><a href="#demo-modal" class="btn-open-demo">Book a Consultation</a></li>
+            <li><a href="#security">Trust Center</a></li>
+            <li><a href="#security">Privacy Policy</a></li>
+            <li><a href="#security">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div>
+          © 2026 Nexus AI Inc. All rights reserved. Designed for enterprise healthcare operations.
+        </div>
+
+        <div class="footer-status-pill">
+          <span class="status-dot"></span>
+          <span>All Systems Operational · 99.98% Uptime</span>
+        </div>
+
+        <div>
+          HIPAA BAA Ready · TLS 1.3 & AES-256 Active
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       INTERACTIVE MODAL: 2-Step Demo Qualification & Calendar (PRD 4.1 & 4.2)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading" aria-hidden="true">
+    <div class="modal-dialog">
+      
+      <div class="modal-header">
+        <h3 id="modal-heading">Schedule Your 20-Min Nexus AI Demo</h3>
+        <button class="modal-close-btn" id="demo-modal-close" aria-label="Close modal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Step Tracker -->
+      <div class="modal-step-tracker">
+        <div class="step-indicator active" id="step-ind-1">
+          <div class="step-circle">1</div>
+          <span>Qualification</span>
+        </div>
+        <div class="step-indicator" id="step-ind-2">
+          <div class="step-circle">2</div>
+          <span>Select Time</span>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- STEP 1: Qualification Form -->
+        <div id="modal-step-1">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="demo-email" class="form-label">Work Email *</label>
+              <input type="email" id="demo-email" class="form-input" placeholder="sarah@clinicnetwork.com" required>
+              <span class="field-error-msg" id="err-demo-email">Please enter a valid work email.</span>
+            </div>
+
+            <div class="form-field">
+              <label for="demo-name" class="form-label">Full Name *</label>
+              <input type="text" id="demo-name" class="form-input" placeholder="Sarah Lin" required>
+              <span class="field-error-msg" id="err-demo-name">Full name is required.</span>
+            </div>
+
+            <div class="form-field">
+              <label for="demo-company" class="form-label">Clinic / Organization *</label>
+              <input type="text" id="demo-company" class="form-input" placeholder="Beacon Health Partners" required>
+              <span class="field-error-msg" id="err-demo-company">Organization name is required.</span>
+            </div>
+
+            <div class="form-field">
+              <label for="demo-title" class="form-label">Job Title</label>
+              <input type="text" id="demo-title" class="form-input" placeholder="Operations Manager">
+            </div>
+
+            <div class="form-field">
+              <label for="demo-size" class="form-label">Monthly Claim Volume</label>
+              <select id="demo-size" class="form-select">
+                <option value="1000-5000">1,000 – 5,000 claims/mo</option>
+                <option value="5000-15000" selected>5,000 – 15,000 claims/mo</option>
+                <option value="15000-50000">15,000 – 50,000 claims/mo</option>
+                <option value="50000+">50,000+ claims/mo</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="demo-ehr" class="form-label">Primary EHR / Software</label>
+              <select id="demo-ehr" class="form-select">
+                <option value="epic">Epic Systems</option>
+                <option value="athena" selected>AthenaHealth</option>
+                <option value="cerner">Oracle Health (Cerner)</option>
+                <option value="kareo">Kareo / Tebra</option>
+                <option value="other">Other / Custom Clearinghouse</option>
+              </select>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="demo-problem" class="form-label">Primary Operational Bottleneck</label>
+              <textarea id="demo-problem" class="form-textarea" rows="2" placeholder="e.g. High initial claim denial rate, prior-auth delays, or back-office staffing shortage..."></textarea>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-lg" style="width: 100%;" id="btn-to-step-2">
+            <span>Continue to Calendar Selection</span>
+            <span class="btn-icon-right" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <!-- STEP 2: Calendar Slot Picker -->
+        <div id="modal-step-2" style="display: none;">
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 8px;">
+            Choose a convenient 20-minute slot with our Healthcare Operations Specialist:
+          </p>
+
+          <div class="calendar-preview-grid">
+            <button class="time-slot-btn selected" data-slot="Tomorrow at 10:00 AM EST">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">TOMORROW</div>
+              <div>10:00 AM EST</div>
+            </button>
+            <button class="time-slot-btn" data-slot="Tomorrow at 2:30 PM EST">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">TOMORROW</div>
+              <div>2:30 PM EST</div>
+            </button>
+            <button class="time-slot-btn" data-slot="Thursday at 11:15 AM EST">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">THURSDAY</div>
+              <div>11:15 AM EST</div>
+            </button>
+            <button class="time-slot-btn" data-slot="Thursday at 4:00 PM EST">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">THURSDAY</div>
+              <div>4:00 PM EST</div>
+            </button>
+            <button class="time-slot-btn" data-slot="Friday at 9:30 AM EST">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">FRIDAY</div>
+              <div>9:30 AM EST</div>
+            </button>
+            <button class="time-slot-btn" data-slot="Friday at 1:00 PM EST">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">FRIDAY</div>
+              <div>1:00 PM EST</div>
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-secondary" id="btn-back-to-step-1" style="flex: 1;">Back</button>
+            <button class="btn btn-primary" id="btn-confirm-booking" style="flex: 2;">Confirm Demo Booking</button>
+          </div>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div id="modal-step-success" style="display: none;">
+          <div class="confirmation-card">
+            <div class="success-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h4>You're All Set!</h4>
+            <p>
+              Your demo consultation has been reserved. A calendar invitation and personalized clinic ROI agenda have been dispatched to your email.
+            </p>
+            <div class="scheduled-details-pill" id="confirmed-slot-text">
+              Confirmed: Tomorrow at 10:00 AM EST with Healthcare AI Lead
+            </div>
+            <button class="btn btn-primary" id="btn-done-modal" style="margin: 0 auto;">Done</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Application JS -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -45,3 +45,6 @@ ENV/
 # Operating System
 .DS_Store
 Thumbs.db
+
+# Scratch testing directory
+scratch/

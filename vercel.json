@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
+    { "source": "/nexus/(.*)", "destination": "/nexus_ai/$1" },
+    { "source": "/nexus", "destination": "/nexus_ai/index.html" },
+    { "source": "/", "destination": "/nexus_ai/index.html" },
+    { "source": "/(.*)", "destination": "/nexus_ai/$1" }
+  ]
+}
